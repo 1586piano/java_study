@@ -1,58 +1,64 @@
+//사용자 정의 예외와 연결된 예외 학습
+
+//실행 결과
+//Not enough Memory
+//        Delete tmp files
+//        InstallException: Install Exception!
+//        at main.install(main.java:17)
+//        at main.main(main.java:7)
+//        Caused by: MemoryException: Memory Exception!
+//        at main.startinstall(main.java:30)
+//        at main.install(main.java:15)
+//        ... 1 more
+
 public class main {
 
-
-    public static void main(String[] args) throws Exception {
-
-        //try-catch 예제
-        method1();
-
-        try {
-            //method에 예외 선언하는 예제.
-            //method3에서 발생한 예외를 처리하지 않으면 main이 비정상 종료된다.
-            method2();
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("Exception e : "+e.getMessage());
-        }
-        finally {
-            //예외 발생여부와 관계없이 실행된다.
-            //예외가 발생한 경우 : try-catch-finally
-            //예외가 발생하지 않은 경우 : try-finally
-            System.out.println("success");
-        }
-    }
-
-    static void method1(){
+    public static void main(String[] args){
         try{
-            //ArithmeticException 발생
-            System.out.println(0/0);
-
-            //고의로 예외 발생
-            Exception e = new Exception("Error~");
-            throw e;
-
-            //RuntimeException은 프로그래머의 실수에 의해 발생하기 때문에 예외처리를 강제하지 않는다.
-            //RuntimeException - ArrayIndexOutOfBoundsException, NullPointerException 등
-            //throw new RuntimeException();
-
-        } catch (ArithmeticException ae) {
-            ae.printStackTrace();
-            System.out.println("0/0 : "+ae.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Exception e : "+e.getMessage());
+            install();
+        }catch (InstallException ie){
+            ie.printStackTrace();
         }
     }
 
-    //반드시 처리해야만 하는 예외들만 선언하도록 한다.
-    static void method2() throws Exception {
-        //method3에 의해 전달되 예외는 method2에서 처리되지 않고, 메인으로 던져진다.
-        method3();
+    static void install() throws InstallException{
+        try{
+            startinstall();
+        }catch (MemoryException me){
+            InstallException ie = new InstallException("Install Exception!");
+            //설치 중 예외 발생의 원인을 설정한다.
+            ie.initCause(me);
+            //예외를 메인(intall을 실행시킨 곳)으로 던진다.
+            throw ie;
+        }finally {
+            System.out.println("Delete tmp files");
+        }
     }
 
-    //method3에서 발생한 예외는 method3에서 처리되지 않고 method2로 던진다.
-    static void method3() throws Exception {
-        throw new Exception("method3 Exception");
+    static void startinstall() throws MemoryException{
+        if(!enoughMemory()){
+            System.out.println("Not enough Memory");
+            throw new MemoryException("Memory Exception!");
+        }
     }
 
+    static Boolean enoughMemory(){
+        //예외를 발생시키기 위해 메모리가 없는 상태를 가정
+        return false;
+    }
+
+}
+
+
+//Exception클래스 또는 RuntimeException클래스를 상속받아 사용자 정의 예외 생성
+class InstallException extends Exception {
+    InstallException(String msg) { //String을 매개변수로 받아 메시지로 사용할 수 있다.
+        super(msg);
+    }
+}
+
+class MemoryException extends Exception {
+    MemoryException(String msg) {
+        super(msg);
+    }
 }
