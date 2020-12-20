@@ -1,65 +1,30 @@
-
-//사용자 정의 예외와 연결된 예외 학습
+// StringTokenizer, Split 비교
 
 //실행 결과
-//Not enough Memory
-//        Delete tmp files
-//        InstallException: Install Exception!
-//        at main.install(main.java:17)
-//        at main.main(main.java:7)
-//        Caused by: MemoryException: Memory Exception!
-//        at main.startinstall(main.java:30)
-//        at main.install(main.java:15)
-//        ... 1 more
+// P|||S||H| -> result.length() : 6
+// P|S|H| -> Token num : 3
+import java.util.StringTokenizer;
 
 public class main {
 
-    public static void main(String[] args){
-        try{
-            install();
-        }catch (InstallException ie){
-            ie.printStackTrace();
+    public static void main(String[] args) {
+        String data = "P,,,S,,H";
+
+        //split은 데이ㅓ를 토큰으로 잘라낸 결과를 배열에 담는다.상대적으로 성능이 떨어진다.
+        String[] result = data.split(",");
+        for(int i=0; i<result.length; i++){
+            System.out.print(result[i] +"|");
         }
-    }
+        System.out.println(" -> result.length() : "+result.length);
 
-    static void install() throws InstallException{
-        try{
-            startinstall();
-        }catch (MemoryException me){
-            InstallException ie = new InstallException("Install Exception!");
-            //설치 중 예외 발생의 원인을 설정한다.
-            ie.initCause(me);
-            //예외를 메인(intall을 실행시킨 곳)으로 던진다.
-            throw ie;
-        }finally {
-            System.out.println("Delete tmp files");
+        //Stringtokenizer는 토큰을 반환하여 바로 사용하고, 빈 문자열을 토큰으로 인식하지 않는다.
+        StringTokenizer st = new StringTokenizer(data,",");
+        int i=0;
+        for(; st.hasMoreTokens(); i++){
+            System.out.print(st.nextToken() +"|");
         }
+        System.out.println(" -> Token num : "+i);
+
     }
 
-    static void startinstall() throws MemoryException{
-        if(!enoughMemory()){
-            System.out.println("Not enough Memory");
-            throw new MemoryException("Memory Exception!");
-        }
-    }
-
-    static Boolean enoughMemory(){
-        //예외를 발생시키기 위해 메모리가 없는 상태를 가정
-        return false;
-    }
-
-}
-
-
-//Exception클래스 또는 RuntimeException클래스를 상속받아 사용자 정의 예외 생성
-class InstallException extends Exception {
-    InstallException(String msg) { //String을 매개변수로 받아 메시지로 사용할 수 있다.
-        super(msg);
-    }
-}
-
-class MemoryException extends Exception {
-    MemoryException(String msg) {
-        super(msg);
-    }
 }
