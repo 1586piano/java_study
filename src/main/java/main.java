@@ -1,3 +1,5 @@
+//날짜와 시간 비교
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.chrono.JapaneseDate;
@@ -6,8 +8,11 @@ public class main {
 
     public static void main(String[] args) {
 
-        //now()로 생성
+        //생성 및 요소 변경
         LocalDate today = LocalDate.now();
+        LocalDate today2 = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate tomorrow = today.plusDays(1);
         LocalTime now = LocalTime.now();
 
         //of()로 지정하여 생성
@@ -25,7 +30,11 @@ public class main {
         System.out.println(now.isBefore(time)); //true
         System.out.println(now.isAfter(time)); //false
 
-
+        //compareTo가 오버라이딩 되어 있다.
+        System.out.println(today.compareTo(today2)); //0 같음
+        System.out.println(today.compareTo(yesterday)); //1
+        System.out.println(today.compareTo(tomorrow)); //-1
+        System.out.println(now.compareTo(time)); //-1
     }
 
 }
