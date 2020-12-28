@@ -1,4 +1,4 @@
-//Comparator와 Comparable
+package comparator_comparable;//Comparator와 Comparable
 //Comparator와 Comparable은 모두 인터페이스로, 컬렉션을 정렬하는데 필요한 메소드를 정의하고 있다.
 //Comparable: 기본 정렬 기준을 구현하는데 사용.
 //Comparator : 다른 기준으로 정렬하고자 할 때 사용
