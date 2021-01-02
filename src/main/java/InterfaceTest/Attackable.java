@@ -1,0 +1,4 @@
+package InterfaceTest;
+
+interface Attackable {
+}
