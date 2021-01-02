@@ -3,11 +3,11 @@
 //Comparable: 기본 정렬 기준을 구현하는데 사용.
 //Comparator : 다른 기준으로 정렬하고자 할 때 사용
 
+package comparator_comparable;
+
 import java.util.Arrays;
-import java.util.Comparator;
 
-public class main {
-
+public class Comparator_comparable {
     public static void main(String[] args) {
 
         //Comparator 예제
@@ -32,35 +32,5 @@ public class main {
         for (Person p:person) {
             System.out.println(p.name+", "+p.age);
         }
-    }
-
-}
-
-
-class Descending implements Comparator{
-    public int compare(Object o1, Object o2){
-        if( o1 instanceof Comparable && o2 instanceof Comparable){
-            Comparable c1 = (Comparable)o1;
-            Comparable c2 = (Comparable)o2;
-            return c1.compareTo(c2) * -1 ; //-1을 곱해서 기본 정렬 방식의 역으로 변경. 객체의 순서를 바꿔도 된다.
-        }
-        return -1;
-    }
-}
-
-class Person implements Comparable<Person> {
-    String name;
-    int age;
-
-    public Person(String name, int age) {
-        super();
-        this.name = name;
-        this.age = age;
-    }
-
-    //사람의 정렬 기준은 나이
-    @Override
-    public int compareTo(Person o) {
-        return this.age-o.age;
     }
 }
