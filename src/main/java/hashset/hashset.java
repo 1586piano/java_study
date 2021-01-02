@@ -6,7 +6,7 @@ import java.util.Set;
 //hashset : 중복x,저장 순서x
 //중복된 요소를 추가하고자 한다면 false 반환. hashset을 이용하여 중복 요소들을 쉽게 제거할 수 있다.
 //저장 순서를 유지하고 싶다면, LinkedHashSet을 사용해야 한다.
-public class main {
+public class hashset {
 
     public static void main(String[] args) {
 
