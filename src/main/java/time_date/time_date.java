@@ -1,10 +1,10 @@
-//날짜와 시간 비교
+package time_date;//날짜와 시간 비교
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.chrono.JapaneseDate;
 
-public class main {
+public class time_date {
 
     public static void main(String[] args) {
 
