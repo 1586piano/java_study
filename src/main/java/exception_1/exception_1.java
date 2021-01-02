@@ -1,5 +1,8 @@
-public class main {
+//예외 선언과 try-catch를 이용한 예외 처리 학습
 
+package exception_1;
+
+class exception_1 {
 
     public static void main(String[] args) throws Exception {
 
