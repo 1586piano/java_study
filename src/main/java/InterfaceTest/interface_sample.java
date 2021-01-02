@@ -1,5 +1,8 @@
+//인터페이스 학습을 위한 단순한 기능의 게임 유닛 구현
+
 package InterfaceTest;
-public class main {
+
+public class interface_sample {
 
     public static void main(String[] args) {
         Tank tank = new Tank("tank1");
