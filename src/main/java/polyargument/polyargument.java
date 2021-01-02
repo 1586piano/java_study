@@ -1,6 +1,11 @@
+//다형성이란 여러 형태를 가질 수 있는 능력을 의미한다.
+//조상클래스타입의 참조변수로 자손클래스의 인스턴스를 참조할 수 있도록 한다.
+
+package polyargument;
+
 import java.util.Vector;
 
-
+//Airpod, Ipad, Macbook을 Product 클래스의 자손타입으로 생성하여 Product클래스의 참조변수면 어느 것이나 매개변수로 활용할 수 있도록 한다.
 class Product{
     int price;
     int bonusPoint;
@@ -88,7 +93,7 @@ class Buyer{
 }
 
 
-public class main {
+public class polyargument {
 
     public static void main(String[] args) {
 
