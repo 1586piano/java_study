@@ -3,14 +3,17 @@
 //실행 결과
 // P|||S||H| -> result.length() : 6
 // P|S|H| -> Token num : 3
+
+package stringTokenizer;
+
 import java.util.StringTokenizer;
 
-public class main {
+public class stringTokenizer {
 
     public static void main(String[] args) {
         String data = "P,,,S,,H";
 
-        //split은 데이ㅓ를 토큰으로 잘라낸 결과를 배열에 담는다.상대적으로 성능이 떨어진다.
+        //split은 데이터를 토큰으로 잘라낸 결과를 배열에 담는다.상대적으로 성능이 떨어진다.
         String[] result = data.split(",");
         for(int i=0; i<result.length; i++){
             System.out.print(result[i] +"|");
