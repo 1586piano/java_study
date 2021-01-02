@@ -19,10 +19,14 @@
 // - 처음부터 객체 삭제 -
 // ArrayList : 2350
 // LinkedList : 541
+
+package linkedList;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class main {
+public class linkedList {
 
     public static void main(String[] args) {
 
