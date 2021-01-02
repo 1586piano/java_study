@@ -1,4 +1,7 @@
-// Date와 time
+//Date와 time클래스 비교
+//time클래스는 날짜와 시간을 다루는데 필요한 핵심 클래스들을 제공합니다.
+//Date와 Calendar의 단점을 해소하기 위해 JDK1.8부터 time패키지가 추가되었습니다.
+package date_time;
 
 //실행 결과
 //2020-12-21
@@ -13,7 +16,7 @@
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class main {
+public class date_time {
 
     public static void main(String[] args) {
 
