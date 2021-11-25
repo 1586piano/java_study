@@ -43,6 +43,15 @@ public class ArrayStudy {
         //String 배열과 char배열의 한가지 중요한 차이점은 String은 읽을 수만 있고 내용을 변경할 수 없다. 변경하는 것 처럼 보이지만 새로 생성되는 것.
         String[] name = new String[]{"song", "hee"};
         System.out.println("String 배열 출력 : " + Arrays.toString(name));
+        System.out.println("name[0] 문자열에서 0 인덱스의 문자 : " + name[0].charAt(0));
+        System.out.println("name[1] 문자열에서 0~1 인덱스의 문자 : " + name[0].substring(0,1));
+
+        String str = "songhee";
+        char[] chArr = str.toCharArray();
+        String str2 = new String(chArr);
+        System.out.println("String -> char 배열 : " + Arrays.toString(chArr));
+        System.out.println("char 배열 -> String : " + str2);
+
 
         //배열의 길이 변경하기1
         // 1. 더 큰 배열을 생성한다.
