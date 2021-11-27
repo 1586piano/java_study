@@ -14,6 +14,27 @@ public class Tv {
     static int width = 100;
     static int height = 80;
 
+    Tv(){
+        //this : 인스턴스 자신을 가리키는 참조변수로, 인스턴스 주소가 저장되어 있다.
+        //static 메서드에서는 사용할 수 없음. 왜냐하면 인스턴스가 생성되지 않을 때도 있기 때문.
+        this("white",true,0);
+    }
+
+    Tv(String color){
+        this(color, true, 0);
+    }
+
+    Tv(String color, boolean power, int channel){
+        this.color=color;
+        this.power=power;
+        this.channel=channel;
+    }
+
+    //클래스 복사 생성자
+    Tv(Tv tv) {
+        this(tv.color, tv.power, tv.channel);
+    }
+
     void power(){
         power = !power;
     }
