@@ -1,8 +1,8 @@
+package polymorphism;
+
 //다형성이란 여러 형태를 가질 수 있는 능력을 의미한다.
-//조상클래스타입의 참조변수로 자손클래스의 인스턴스를 참조할 수 있도록 한다.
-
-package polyargument;
-
+//조상클래스타입의 참조변수로 자손클래스의 인스턴스를 참조할 수 있도록 한다. 반대는 안됨. 자손 멤버가 더 많기 때문.
+//다만, 조상 클래스타입의 참조변수로 자손 클래스의 인스턴스를 생성하면, 조상 클래스타입의 멤버만 사용 가능하다.
 import java.util.Vector;
 
 //Airpod, Ipad, Macbook을 Product 클래스의 자손타입으로 생성하여 Product클래스의 참조변수면 어느 것이나 매개변수로 활용할 수 있도록 한다.
@@ -47,6 +47,7 @@ class Buyer{
     //배열은 크기가 한정되어 있으므로 Vector로 관리(동적배열)
     Vector item = new Vector();
 
+    //buy(Ipad ipad), buy(Airpod airpod), buy(Macbook macbook) 으로 따로 만들지 않고, 이들의 공통 조상인 Product로 생성.
     void buy( Product p ){
         if( (money+bonusPoint)<p.price ){
             System.out.println("Not enough money!");
@@ -56,6 +57,8 @@ class Buyer{
         money-=p.price;
         bonusPoint+=p.bonusPoint;
         item.add(p);
+        //getClass 메서드로 인스턴스 클래스 이름을 얻을 수 있으며, 필요한 경우, instanceOf 연산자를 통해 인스턴스를 확인할 수 있다.
+        System.out.println("인스턴스 클래스 이름 : + "+p.getClass());
         System.out.println(p+" is yours! ");
     }
 
@@ -93,8 +96,8 @@ class Buyer{
 }
 
 
-public class polyargument {
 
+public class Polymorphism {
     public static void main(String[] args) {
 
         Buyer songhee = new Buyer();
@@ -112,5 +115,7 @@ public class polyargument {
         songhee.refund(ipad);
         songhee.summary();
     }
-
 }
+
+
+
