@@ -6,4 +6,5 @@ public class Bi implements I{
     public void methodBi() {
         System.out.println("class Bi implements I");
     }
+
 }
