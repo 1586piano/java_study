@@ -75,3 +75,13 @@ public > protected > (default) > private
 인터페이스에 메서드가 추가되면 이를 구현한 모든 클래스들이 추가된 메서드를 구현하야 한다.
 이럴 때 default method를 사용할 수 있다. default method는 구현해도 되고, 하지 않아도 된다.
 일반적인 method 생성 방식에서 앞에 default를 붙이고, 뒤에 몸체{} 를 붙여서 선언한다.
+ 
+## 예외처리(Exception handling)
+#### 프로그램 오류 
+1. 컴파일 에러 : 컴파일 시에 발생하는 에러(checked)
+2. 런타임 에러 : 실행 시에 발생하는 에러(unchecked)
+3. 논리적 에러 : 실행은 되지만, 의도와 다르게 동작하는 것
+#### Error & Exception
+Error : 메모리 부족 이나 스택오버플로우 등 발생하면 심각한 오류
+Exception : 발생하더라도 수습될 수 있는 비교적 덜 심각한 것
+예제는 Exception 참고.
