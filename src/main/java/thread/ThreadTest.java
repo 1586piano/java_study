@@ -1,5 +1,7 @@
 package thread;
 
+import java.util.Scanner;
+
 public class ThreadTest {
     public static void main(String[] args){
         //구현 방법
@@ -36,6 +38,8 @@ public class ThreadTest {
         //일반 쓰레드의 보조적인 역할을 수행하는 쓰레드.
         //예를 들어서, 가비지컬렉터, 워드에서 자동저장, 화면 자동갱신 등의 기능을 데몬쓰레드로 구현한다.
         Thread damonThread = new Thread(new DamonThread());
+
+        //쓰레드를 데몬 쓰레드로 변경한다.
         damonThread.setDaemon(true);
         damonThread.start();
 
@@ -45,6 +49,25 @@ public class ThreadTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(i==5){
+                DamonThread.autoSave = true;
+            }
         }
+        System.out.println("시스템이 종료되었습니다.");
+        //일반 쓰레드가 종료되면, 데몬 쓰레드는 강제적으로 자동 종료된다.
+        //만약 데몬쓰레드로 설정하지 않았다면, 수동으로 강제 종료시키기 전에는 쓰레드가 종료되지 않는다.
+
+
+        //interrupt : 쓰레드의 작업 취소. 단지 멈추라고만 할 뿐 쓰레드를 종료시키는 것은 아니다.
+        //interrupted 변수의 값을 바꿀 뿐이다. interrupt가 호출되면 true, 그렇지 않으면 false를 반환한다.
+        MyThreadExtend interruptThread = new MyThreadExtend();
+        interruptThread.start();
+
+        System.out.println("숫자를 입력하시오");
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        int num = Integer.parseInt(input);
+        interruptThread.interrupt(); // interrupted=true;
+        System.out.println("isInterrupted() : "+interruptThread.isInterrupted());
     }
 }
