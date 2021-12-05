@@ -31,5 +31,20 @@ public class ThreadTest {
         //start를 실행하면, thread가 작업을 수행하는데 필요한 콜스택을 생성한 다음에 거기에 run을 호출한다. 쓰레드가 종료되면 호출스택을 소멸된다.
         th1.start();
         th2.start();
+
+        //데몬 쓰레드
+        //일반 쓰레드의 보조적인 역할을 수행하는 쓰레드.
+        //예를 들어서, 가비지컬렉터, 워드에서 자동저장, 화면 자동갱신 등의 기능을 데몬쓰레드로 구현한다.
+        Thread damonThread = new Thread(new DamonThread());
+        damonThread.setDaemon(true);
+        damonThread.start();
+
+        for(int i=0; i<=10; i++){
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
