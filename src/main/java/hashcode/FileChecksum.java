@@ -56,6 +56,7 @@ public class FileChecksum {
 
     //파일 저장
     public static void saveFile(TextFile file){
+        long start = System.currentTimeMillis();
         try{
             FileOutputStream fos = new FileOutputStream(file.getFileName()+".txt");
             DataOutputStream dos = new DataOutputStream(fos);
@@ -64,15 +65,20 @@ public class FileChecksum {
         }catch (IOException e){
             e.printStackTrace();
         }
+        long end = System.currentTimeMillis();
+        System.out.println("파일 저장 시간: " + (end - start) + " ms");
     }
 
     //파일 오픈
     public static TextFile openFile(String fileName) throws IOException {
         TextFile f = new TextFile();
         try{
+            long start = System.currentTimeMillis();
             FileInputStream fis = new FileInputStream(fileName);
             DataInputStream dis = new DataInputStream(fis);
             String fileBody = dis.readUTF();
+            long end = System.currentTimeMillis();
+            System.out.println("파일 오픈 시간: " + (end - start) + " ms");
             fis.close();
             f.setFileName(fileName);
             f.setFileBody(fileBody);
