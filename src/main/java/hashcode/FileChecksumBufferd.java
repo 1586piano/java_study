@@ -57,10 +57,10 @@ public class FileChecksum {
     //파일 저장
     public static void saveFile(TextFile file){
         try{
-            FileOutputStream fos = new FileOutputStream(file.getFileName()+".txt");
-            DataOutputStream dos = new DataOutputStream(fos);
-            dos.writeUTF(file.getFileBody());
-            fos.close();
+            FileWriter fw = new FileWriter(file.getFileName()+".txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(file.getFileBody());
+            fw.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -70,10 +70,28 @@ public class FileChecksum {
     public static TextFile openFile(String fileName) throws IOException {
         TextFile f = new TextFile();
         try{
-            FileInputStream fis = new FileInputStream(fileName);
-            DataInputStream dis = new DataInputStream(fis);
-            String fileBody = dis.readUTF();
-            fis.close();
+            FileInputStream fos = new FileInputStream(fileName);
+            DataInputStream dos = new DataInputStream(fos);
+            String fileBody = dos.readUTF();
+            f.setFileName(fileName);
+            f.setFileBody(fileBody);
+        } catch (FileNotFoundException e) {
+            throw e;
+        } catch (IOException e) {
+            throw e;
+        }
+        //f가 비어있지 않다면 return
+        return f;
+    }
+
+    //디렉토리 내 파일 전부 오픈
+    public static TextFile openFiles(String fileName) throws IOException {
+        ArrayList<TextFile> fileList = new ArrayList<>();
+        TextFile f = new TextFile();
+        try{
+            FileInputStream fos = new FileInputStream(fileName);
+            DataInputStream dos = new DataInputStream(fos);
+            String fileBody = dos.readUTF();
             f.setFileName(fileName);
             f.setFileBody(fileBody);
         } catch (FileNotFoundException e) {
