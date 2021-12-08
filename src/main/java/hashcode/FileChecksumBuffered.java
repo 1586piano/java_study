@@ -1,10 +1,9 @@
 package hashcode;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileChecksum {
+public class FileChecksumBuffered {
     //1. 파일 생성 : 제목과 내용을 입력받아 파일(객체)을 생성한다.
     //2. 파일 확인 : 생성한 파일 내용을 확인한다.
     //3. 파일 저장 : 생선한 파일을 txt 파일로 특정 경로에 저장한다.
@@ -27,6 +26,7 @@ public class FileChecksum {
 
         System.out.print("내용 : ");
         String fileBody = "";
+
         while( scan2.hasNext() ){
             String readLine = scan2.nextLine();
             if(readLine.equals("quit")){
@@ -56,24 +56,33 @@ public class FileChecksum {
 
     //파일 저장
     public static void saveFile(TextFile file){
+        long start = System.currentTimeMillis();
         try{
-            FileOutputStream fos = new FileOutputStream(file.getFileName()+".txt");
-            DataOutputStream dos = new DataOutputStream(fos);
-            dos.writeUTF(file.getFileBody());
-            fos.close();
+            FileWriter fw = new FileWriter(file.getFileName()+".txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(file.getFileBody());
+            fw.close();
         }catch (IOException e){
             e.printStackTrace();
         }
+        long end = System.currentTimeMillis();
+        System.out.println("파일 저장 시간: " + (end - start) + " ms");
     }
 
     //파일 오픈
     public static TextFile openFile(String fileName) throws IOException {
         TextFile f = new TextFile();
         try{
-            FileInputStream fis = new FileInputStream(fileName);
-            DataInputStream dis = new DataInputStream(fis);
-            String fileBody = dis.readUTF();
-            fis.close();
+            long start = System.currentTimeMillis();
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+            String fileBody = "";
+            while((br.readLine())!=null){
+                fileBody+=br.readLine();
+            }
+            long end = System.currentTimeMillis();
+            System.out.println("파일 오픈 시간: " + (end - start) + " ms");
+            fr.close();
             f.setFileName(fileName);
             f.setFileBody(fileBody);
         } catch (FileNotFoundException e) {
@@ -96,7 +105,7 @@ public class FileChecksum {
             e.printStackTrace();
         }
         try {
-            f2 = openFile("file2.txt");
+            f2 = openFile("file1.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,10 +115,11 @@ public class FileChecksum {
         }else {
             System.out.println("두 파일의 내용은 다릅니다.");
         }
+        //객체 고유의 값을 비교하는 경우 사용한다.
         if( (System.identityHashCode(f1)) == (System.identityHashCode(f2)) ){
-            System.out.println("두 파일은 같습니다.");
+            System.out.println("두 객체는 같습니다.");
         }else{
-            System.out.println("두 파일은 다릅니다.");
+            System.out.println("두 객체는 다릅니다.");
         }
         return true;
     }
