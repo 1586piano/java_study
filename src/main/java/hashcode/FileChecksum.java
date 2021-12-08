@@ -106,10 +106,11 @@ public class FileChecksum {
         }else {
             System.out.println("두 파일의 내용은 다릅니다.");
         }
+        //객체 고유의 값을 비교하는 경우 사용한다.
         if( (System.identityHashCode(f1)) == (System.identityHashCode(f2)) ){
-            System.out.println("두 파일은 같습니다.");
+            System.out.println("두 객체는 같습니다.");
         }else{
-            System.out.println("두 파일은 다릅니다.");
+            System.out.println("두 객체는 다릅니다.");
         }
         return true;
     }
