@@ -72,20 +72,23 @@ public class FileChecksum {
     //파일 오픈
     public static TextFile openFile(String fileName) throws IOException {
         TextFile f = new TextFile();
+        FileInputStream fis = new FileInputStream(fileName);
         try{
             long start = System.currentTimeMillis();
-            FileInputStream fis = new FileInputStream(fileName);
             DataInputStream dis = new DataInputStream(fis);
             String fileBody = dis.readUTF();
             long end = System.currentTimeMillis();
             System.out.println("파일 오픈 시간: " + (end - start) + " ms");
-            fis.close();
             f.setFileName(fileName);
             f.setFileBody(fileBody);
         } catch (FileNotFoundException e) {
             throw e;
+        } catch(EOFException e) {
+            System.out.println("더이상 읽을 내용이 없습니다. ");
         } catch (IOException e) {
             throw e;
+        } finally {
+            fis.close();
         }
         //f가 비어있지 않다면 return
         return f;
