@@ -99,3 +99,45 @@ Exception : 발생하더라도 수습될 수 있는 비교적 덜 심각한 것
 - 멀티쓰레드는 여러 쓰레드가 한 프로세스 내에서 자원을 공유하여 작업해야 하기 떄문에 동기화, 교착상태와 같은 문제들을 고려하여 프로그래밍해야 한다.
 예제는 Thread 참고. 
 
+
+## I/O
+#### 스트림
+한쪽에서 다른 쪽으로 데이터를 전달하면, 두 대상을 연결하고 데이터를 전송할 수 있는 무언가가 필요한데, 이것을 스트림이라고 한다.
+스트림은 연속적인 데이터의 흐름을 물에 비유하여 붙여진 이름이다. 스트림은 단방향 통신만 가능하기에, 하나의 스트림으로 입력과 출력을 동시에 처리할 수는 없다.
+스트림은 먼저 보낸 데이터를 먼저 받게 된다. Queue형태이며, FIFO 구조이다.
+사용하고 닫지 않은 스트림은 자동으로 JVM이 닫아주지만, close()를 이용해서 스트림을 닫아 자원을 반환하는 것을 권장한다.
+flush()는 버퍼가 있는 출력스트림의 경우에만 의미가 있으며, 모든 내용을 출력 소스에 쓰는 역할을 한다. OutputStream에 정의된 flush()는 아무 일도 하지 않는다. 
+- 출력스트림
+- 입력스트림
+
+#### 바이트기반 스트림
+바이트 단위로 데이터를 전송하는 스트림이다.
+입출력 대상 종류에 따라 다름과 같이 구분 한다.
+스트림 / 입출력 대상
+FileInput/OutputStream / File
+ByteArrayInput/OutputStream / Memory(ByteArray)
+PipedInput/OutputStream / Process (프로세스 간의 통신)
+AudioInput/OutputStream / Audio 장치
+
+#### 문자기반 스트림
+바이트 기반 스트림은, 입출력의 단위가 1 byte이다.
+Java에서는 char형이 2 byte이기 때문에 바이트기반 스트림으로 문자를 처리하기에는 어려움이 있다.
+따라서 문제 데이터를 입출력 할 때는 문자 기반 스트림을 이용한다.
+Input/OutputStream -> Reader/Writer
+문자 기반 스트림 / 입출력 대상
+FileReader/Writer / File
+CharArrayReader/Writer / Memort(ByteArray)
+PipedReader/Writer / Process (프로세스 간의 통신)
+StringReader/Writer
+
+#### 보조 스트림
+실제 데이터를 주고 받는 스트림은 아니지만, 스트림의 기능을 향상시키거나 새로운 기능을 추가시는 것을 목적으로 하는 스트림이다.
+스트림을 먼저 생성한 후에 보조 스트림을 생성하여 사용한다.
+* DataInputStream은 더이상 읽을 데이터가 없는 경우, EOFException을 발생시킨다. 따라서 catch문을 이용해서 데이터를 읽는다.
+* 또한 DataInputStream을 닫을 때, null이라면 NullPointerException이 발생하므로, 스트림이 null인지 체크한 후에 close()를 호출해야 한다. close()는 IOException이 발생할 수 있으므로, try/catch로 감싸주어야 하는데, 작업 중 예외로 try 블록을 모두 실행하지 못하는 경우도 발생할 수 있으니 finally안에 넣어주는 것이 더 확실한 방법이다.
+ex) FileInputStream을 사용할 때, 보조스트림 BufferedInputStream을 사용하면 버퍼를 사용하여 입력 성능을 향상시킬 수 있다. 읽어들인 데이터를 버퍼에 채워두었다가 버퍼가 가득차면, 출력 소스에 출력한다. 다만, 버퍼가 가득 차야만 출력하기 때문에 마지막에는 버퍼에 남는 데이터가 있을 수 있다. 보조스트림 close()나 flush()를 호출에서 마지막 버퍼에 남은 데이터를 출력소스에 쓸 수 있도록 한다. close()는 flush를 호출한 후에 close되도록 설계되어있다. 
+- 바이트 기반 보조스트림 종류 871p 참고.
+- 문자 기반 보조스트림 종류 873p 참고.
+
+HashCode 예제 참고.
+
