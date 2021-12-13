@@ -1,5 +1,0 @@
-package InterfaceTest;
-
-interface Repairable {
-
-}
