@@ -10,7 +10,7 @@ public class FileChecksumBuffered {
     //4. 파일 일치 검사 : 두 파일명을 입력받아서 해시코드를 생성하여 파일 일치 여부를 반환한다.
 
     //파일 생성
-    public static void createFile(){
+    public static void createFile() throws IOException {
 
         TextFile file = new TextFile();
 
@@ -55,15 +55,28 @@ public class FileChecksumBuffered {
     }
 
     //파일 저장
-    public static void saveFile(TextFile file){
+    public static void saveFile(TextFile file) throws IOException {
         long start = System.currentTimeMillis();
+
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+
         try{
-            FileWriter fw = new FileWriter(file.getFileName()+".txt");
-            BufferedWriter bw = new BufferedWriter(fw);
+            fw = new FileWriter(file.getFileName()+".txt");
+            bw = new BufferedWriter(fw);
             bw.write(file.getFileBody());
-            fw.close();
         }catch (IOException e){
             e.printStackTrace();
+        }finally {
+            //버퍼 안에 남은 데이터를 모두 flush한 후에 close한다.
+            if(bw!=null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(fw!=null) fw.close();
         }
         long end = System.currentTimeMillis();
         System.out.println("파일 저장 시간: " + (end - start) + " ms");
@@ -72,25 +85,33 @@ public class FileChecksumBuffered {
     //파일 오픈
     public static TextFile openFile(String fileName) throws IOException {
         TextFile f = new TextFile();
+        FileReader fr = null;
+        BufferedReader br = null;
         try{
             long start = System.currentTimeMillis();
-            FileReader fr = new FileReader(fileName);
-            BufferedReader br = new BufferedReader(fr);
+
+            fr = new FileReader(fileName);
+            br = new BufferedReader(fr);
+
             String fileBody = "";
             while((br.readLine())!=null){
                 fileBody+=br.readLine();
             }
+
             long end = System.currentTimeMillis();
+
             System.out.println("파일 오픈 시간: " + (end - start) + " ms");
-            fr.close();
+
             f.setFileName(fileName);
             f.setFileBody(fileBody);
         } catch (FileNotFoundException e) {
             throw e;
         } catch (IOException e) {
             throw e;
+        }finally {
+            if(br!=null) br.close();
+            if(fr!=null) fr.close();
         }
-        //f가 비어있지 않다면 return
         return f;
     }
 
@@ -99,12 +120,9 @@ public class FileChecksumBuffered {
 
         TextFile f1 = new TextFile();
         TextFile f2 = new TextFile();
+
         try {
             f1 = openFile("file1.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             f2 = openFile("file1.txt");
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,7 +142,7 @@ public class FileChecksumBuffered {
         return true;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         System.out.println("작업 번호를 입력하시오 : ");
         Scanner scan = new Scanner(System.in);
