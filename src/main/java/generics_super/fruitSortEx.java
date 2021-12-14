@@ -17,15 +17,11 @@ class Fruit{
 }
 
 class Apple extends Fruit{
-    Apple(String name, int price) {
-        super(name, price);
-    }
+    Apple(String name, int price) { super(name, price); }
 }
 
 class Grape extends Fruit{
-    Grape(String name, int price) {
-        super(name, price);
-    }
+    Grape(String name, int price) { super(name, price); }
 }
 
 class Box<T>{
