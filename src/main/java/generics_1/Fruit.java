@@ -1,4 +1,4 @@
-package generics;
+package generics_1;
 
 interface Eatable{}
 
