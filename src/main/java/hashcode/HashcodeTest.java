@@ -10,9 +10,17 @@ public class HashcodeTest {
         String str1 = new String("abc");
         String str2 = new String("abc");
 
+        //equals는 두 객체가 같은지 검사한다.
+        //만약 equals의 매개변수가 string 이라면, 먼저 length가 같은지 확인하고, length가 같다면 문자를 하나씩 끝까지 비교한다.
         System.out.println(str1.equals(str2));
+
+        //hashCode란 객체를 식별하는 하나의 정수 값이다. hashCode()는 heap에 저장된 객체의 메모리 주소를 반환한다.
+        //hashSet, hashMap, HashTable에서 hashCode를 이용해서 객체 동일성을 확인하고, equals로 다시 비교한다. 이 두개가 같아야 같은 값으로 본다.
+        //HashTable에 key를 생성할 때, hashCode를 사용하고, 이 값이 충돌되는 경우, equals메서드를 사용한다. 같은 객체로 판단되면 기존 객체를 덮어쓰고, 그렇지 않다면, linkedlist에 추가하여 관리한다.
         System.out.println(str1.hashCode());
         System.out.println(str2.hashCode());
+        System.out.println(str1.hashCode()==str2.hashCode());
+
         System.out.println(System.identityHashCode(str1));
         System.out.println(System.identityHashCode(str2));
     }
