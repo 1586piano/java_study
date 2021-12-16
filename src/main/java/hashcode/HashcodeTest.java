@@ -5,6 +5,92 @@ package hashcode;
 //해시코드는 중복될 수 있다..
 //클래스의 인스턴스 변수 값으로 객체의 같고 다름을 판단해야 하는 경우라면, equals 메서드 뿐 만아니라 hashCode메서드도 적절히 오버라이딩 해야 한다.
 //같은 객체라면 hashCode 메서드를 호출했을 때의 결과 값인 해시코드도 같아야하기 때문이다. 11장에서 자세히 설명.
+
+
+import java.util.HashSet;
+
+class Employee{
+    private int id;
+    private String name;
+
+    void setId(int id){
+        this.id = id;
+    }
+    void setName(String name){
+        this.name = name;
+    }
+
+    int getId(){
+        return id;
+    }
+    String getName(){
+        return name;
+    }
+}
+
+
+class Employee2{
+    private int id;
+    private String name;
+
+    void setId(int id){
+        this.id = id;
+    }
+    void setName(String name){
+        this.name = name;
+    }
+
+    int getId(){
+        return id;
+    }
+    String getName(){
+        return name;
+    }
+
+    public boolean equals(Object o){
+        Employee2 e = (Employee2) o;
+        return (this.getId()==e.getId());
+    }
+
+    public String toString(){
+        return (this.getId() + ", " + this.getName());
+    }
+}
+
+class Employee3 {
+    private int id;
+    private String name;
+
+    void setId(int id) {
+        this.id = id;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    int getId() {
+        return id;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    public boolean equals(Object o) {
+        Employee3 e = (Employee3) o;
+        return (this.getId() == e.getId());
+    }
+
+    public String toString() {
+        return (this.getId() + ", " + this.getName());
+    }
+
+    public int hashCode(){
+        return 31*this.getId();
+    }
+}
+
 public class HashcodeTest {
     public static void main(String[] args){
         String str1 = new String("abc");
@@ -23,5 +109,62 @@ public class HashcodeTest {
 
         System.out.println(System.identityHashCode(str1));
         System.out.println(System.identityHashCode(str2));
+
+
+        Employee e1 = new Employee();
+        Employee e2 = new Employee();
+
+        e1.setId(134029);
+        e1.setName("song");
+        e2.setId(134029);
+        e2.setName("song");
+
+        System.out.println(e1.equals(e2)); //false
+        System.out.println(e1.hashCode()); //1829164700
+        System.out.println(e2.hashCode()); //2018699554
+
+        //Employee2는 equals를 오버라이드했다.
+        Employee2 e3 = new Employee2();
+        Employee2 e4 = new Employee2();
+
+        e3.setId(134029);
+        e3.setName("song");
+        e4.setId(134029);
+        e4.setName("song");
+        //equals는 ID를 비교하여 같은 경우 true를 반환하도록 했다. hashCode는 오버라이드 되지 않았다.
+        System.out.println(e3.equals(e4)); //true
+        System.out.println(e3.hashCode()); //1311053135
+        System.out.println(e4.hashCode()); //118352462
+
+        //HashSet에 저장될 때는 hashCode를 비교하여 같은 객체인지를 판단한다.
+        //equals() true라도 hashCode가 다르므로, 다른 객체로 인식하여 같은 객체이지만 중복 저장된다.
+        HashSet<Employee2> hs = new HashSet<>();
+        hs.add(e3);
+        hs.add(e4);
+        System.out.println(hs.toString());
+
+        //Employee3는 equals()와 hashCode()를 오버라이드했다.
+        Employee3 e5 = new Employee3();
+        Employee3 e6 = new Employee3();
+
+        e5.setId(134029);
+        e5.setName("song");
+        e6.setId(134029);
+        e6.setName("song");
+        //equals는 ID를 비교하여 같은 경우 true를 반환하도록 했다. hashCode는 오버라이드 되지 않았다.
+        System.out.println(e5.equals(e6)); //true
+        System.out.println(e5.hashCode()); //1311053135
+        System.out.println(e6.hashCode()); //118352462
+
+        //HashSet에 저장될 때는 hashCode를 비교하여 같은 객체인지를 판단한다.
+        //hashCode가 같다면 같은 객체로 판단한다. String의 경우, hashCode를 비교하고 equals()를 통해 비교한다.
+        //hash 자료구조를 이용하여 저장하는 경우, equals만 오버라이드하고, hashCode를 오버라이드하지 않으면, Employee2와 같은 오류가 발생할 수 있다.
+        //equals() true이면, hashCode도 같아야 한다.
+        //하지만 hashCode가 같다고 해서 equals() true이지만은 않다. (해시 충돌이 발생할 수 있기 때문)
+        //충돌이 발생하지 않아야 hash 자료구조의 성능이 향상된다. (충돌이 발생하면,, 충돌 처리를 해줘야 하지 떄문.. ex)linkedlist로 연결한다든지..)
+        HashSet<Employee3> hs2 = new HashSet<>();
+        hs2.add(e5);
+        hs2.add(e6);
+        System.out.println(hs2.toString()); //중복되지 않음
     }
 }
