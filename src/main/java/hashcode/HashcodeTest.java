@@ -8,51 +8,56 @@ package hashcode;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 
-class Employee{
+class Employee {
     private int id;
     private String name;
 
-    void setId(int id){
+    void setId(int id) {
         this.id = id;
     }
-    void setName(String name){
+
+    void setName(String name) {
         this.name = name;
     }
 
-    int getId(){
+    int getId() {
         return id;
     }
-    String getName(){
+
+    String getName() {
         return name;
     }
 }
 
 
-class Employee2{
+class Employee2 {
     private int id;
     private String name;
 
-    void setId(int id){
+    void setId(int id) {
         this.id = id;
     }
-    void setName(String name){
+
+    void setName(String name) {
         this.name = name;
     }
 
-    int getId(){
+    int getId() {
         return id;
     }
-    String getName(){
+
+    String getName() {
         return name;
     }
 
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         Employee2 e = (Employee2) o;
-        return (this.getId()==e.getId());
+        return (this.getId() == e.getId());
     }
 
-    public String toString(){
+    public String toString() {
         return (this.getId() + ", " + this.getName());
     }
 }
@@ -86,13 +91,35 @@ class Employee3 {
         return (this.getId() + ", " + this.getName());
     }
 
-    public int hashCode(){
-        return 31*this.getId();
+    public int hashCode() {
+        //return (this.getId()+this.getName()).hashCode();
+        //JDK1.8부터 java.util.Objects클래스의 hash()를 이용해서 작성할 수 있다. 이전 코드와 별반 다르지 않지만 아래 코드를 권장한다.
+        return Objects.hash(this.getId(), this.getName());
     }
 }
 
+
 public class HashcodeTest {
-    public static void main(String[] args){
+    public static void identityHashcodeTest() {
+        Employee3 e1 = new Employee3();
+        Employee3 e2 = new Employee3();
+        e1.setId(12345);
+        e1.setName("song");
+        e2.setId(12345);
+        e2.setName("song");
+
+        System.out.println("System.identityHashCode() Test");
+        System.out.println("equals : " + e1.equals(e2));
+        System.out.println("hashCode == : " + (e1.hashCode()==e2.hashCode()));
+        System.out.println("identityHashCode == : " + (System.identityHashCode(e1)==System.identityHashCode(e2)));
+        System.out.println("e1==e2 : " + (e1==e2));
+        System.out.println("System.identityHashCode(e1) : " + System.identityHashCode(e1));
+        System.out.println("System.identityHashCode(e2) : " + System.identityHashCode(e2));
+    }
+
+    public static void main(String[] args) {
+        identityHashcodeTest();
+
         String str1 = new String("abc");
         String str2 = new String("abc");
 
@@ -105,7 +132,7 @@ public class HashcodeTest {
         //HashTable에 key를 생성할 때, hashCode를 사용하고, 이 값이 충돌되는 경우, equals메서드를 사용한다. 같은 객체로 판단되면 기존 객체를 덮어쓰고, 그렇지 않다면, linkedlist에 추가하여 관리한다.
         System.out.println(str1.hashCode());
         System.out.println(str2.hashCode());
-        System.out.println(str1.hashCode()==str2.hashCode());
+        System.out.println(str1.hashCode() == str2.hashCode());
 
         System.out.println(System.identityHashCode(str1));
         System.out.println(System.identityHashCode(str2));
