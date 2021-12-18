@@ -163,3 +163,7 @@ Ramda 예제 참고.
 - hashCode는 저장 구조 측면에서 객체를 식별하기 위한 정수 값이며, equals를 객체 동치성을 비교하는 것이 목적이다. * equals는 본래 object를 비교. String의 경우 문자비교.
 - 하지만 hashCode가 같다고 해서 equals() true이지만은 않다. (해시 충돌이 발생할 수 있기 때문)
 - 충돌이 발생하지 않아야 hash 자료구조의 성능이 향상된다. (충돌이 발생하면,, 충돌 처리를 해줘야 하지 떄문.. ex)linkedlist로 연결한다든지..)
+
+#### hashCode()와 identityHashCode()
+- hashCode()는 오버라이드 가능하며, 객체의 메모리 주소를 반환한다. Java에서 객체를 관리하기 위해 사용한다.
+- identityHashCode()는 오버라이드 불가능하며, 객체의 메모리 주소를 반환한다. OS상에서 객체를 관리하기 위해 사용한다.
