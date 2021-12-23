@@ -1,5 +1,7 @@
 package hashcode;
 
+import properties_1.PropertiesEx2;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -84,18 +86,20 @@ public class FileChecksumBuffered {
 
     //파일 오픈
     public static TextFile openFile(String fileName) throws IOException {
+
         TextFile f = new TextFile();
         FileReader fr = null;
         BufferedReader br = null;
+        StringBuilder bodyBuilder = new StringBuilder();
+
         try{
             long start = System.currentTimeMillis();
 
             fr = new FileReader(fileName);
             br = new BufferedReader(fr);
-
-            String fileBody = "";
-            while((br.readLine())!=null){
-                fileBody+=br.readLine();
+            String line ="";
+            while((line = br.readLine())!= null){
+                bodyBuilder.append(line);
             }
 
             long end = System.currentTimeMillis();
@@ -103,7 +107,7 @@ public class FileChecksumBuffered {
             System.out.println("파일 오픈 시간: " + (end - start) + " ms");
 
             f.setFileName(fileName);
-            f.setFileBody(fileBody);
+            f.setFileBody(bodyBuilder.toString());
         } catch (FileNotFoundException e) {
             throw e;
         } catch (IOException e) {
@@ -151,6 +155,7 @@ public class FileChecksumBuffered {
                     break;
             case 2: checksum();
                     break;
+            case 3: readFile(openFile("properties2.txt"));
             default: System.out.println("작업 번호를 입력하시오 : ");
                     break;
         }

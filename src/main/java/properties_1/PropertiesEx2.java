@@ -39,23 +39,16 @@ public class PropertiesEx2 {
         TextFile f = new TextFile();
         FileReader fr = null;
         BufferedReader br = null;
+        StringBuilder bodyBuilder = new StringBuilder();
         try{
-            long start = System.currentTimeMillis();
-
             fr = new FileReader(fileName);
             br = new BufferedReader(fr);
-
-            String fileBody = "";
-            while((br.readLine())!=null){
-                fileBody+=br.readLine();
+            String line ="";
+            while((line = br.readLine())!= null){
+                bodyBuilder.append(line);
             }
-
-            long end = System.currentTimeMillis();
-
-            System.out.println("파일 오픈 시간: " + (end - start) + " ms");
-
             f.setFileName(fileName);
-            f.setFileBody(fileBody);
+            f.setFileBody(bodyBuilder.toString());
         } catch (FileNotFoundException e) {
             throw e;
         } catch (IOException e) {
@@ -68,13 +61,10 @@ public class PropertiesEx2 {
     }
 
     public static void readProperties(Properties prop, TextFile file){
-        System.out.println(file.getFileBody());
-        String[] argsFile = file.getFileBody().split(",");
+        String fileBody = file.getFileBody();
+        String[] argsFile = fileBody.split(",");
         for( String line : argsFile){
-            System.out.println("line: "+ line);
             String[] property = line.split("=");
-            System.out.println("prop[0]: "+ property[0]);
-            System.out.println("prop[1]: "+ property[1]);
             prop.setProperty(property[0], property[1]);
         }
     }
