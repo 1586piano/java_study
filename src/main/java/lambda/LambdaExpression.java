@@ -1,8 +1,8 @@
-package ramda;
+package lambda;
 
 import java.util.*;
 
-public class RamdaExpression{
+public class LambdaExpression {
 
     static void printArr(int[] arr){
         for(int i=0; i<arr.length; i++){
