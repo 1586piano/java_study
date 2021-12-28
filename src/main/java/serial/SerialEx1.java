@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 public class SerialEx1 {
     public static void main(String[] args){
+
+        ObjectStreamClass c = ObjectStreamClass.lookup(TextFile.class);
+        //serialVerUID 생성
+        long serialID = c.getSerialVersionUID();
+        System.out.println("serialId : " + serialID);
+
         String fileName = "TestFile.ser";
         FileOutputStream fos = null;
         try {

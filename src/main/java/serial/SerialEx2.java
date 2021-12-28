@@ -1,7 +1,5 @@
 package serial;
 
-import interface_1.A;
-
 import java.io.*;
 import java.util.ArrayList;
 
